@@ -53,9 +53,22 @@ frappe.ui.SortSelector = Class.extend({
 			var order_by = this.args;
 			this.args = {}
 
-			if (order_by.includes('`.`')) {
-				// scrub table name (separated by dot), like `tabTime Log`.`modified` desc`
-				order_by = order_by.split('.')[1];
+			if (order_by.includes('PEPE')) {
+				this.args.sort_by = "parent`, `tabMuestra Analisis`.`item_name` asc, `tabMuestra`.`name" ;
+				this.args.sort_order = 'asc';
+			} else {
+				if (order_by.includes('`.`')) {
+					// scrub table name (separated by dot), like `tabTime Log`.`modified` desc`
+					order_by = order_by.split('.')[1];
+				}
+
+				var parts = order_by.split(' ');
+				if (parts.length === 2) {
+					var fieldname = strip(parts[0], '`');
+
+					this.args.sort_by = fieldname;
+					this.args.sort_order = parts[1];
+				}
 			}
 
 			var parts = order_by.split(' ');
