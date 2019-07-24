@@ -18,6 +18,11 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		const route = frappe.get_route();
 		if (route.length === 4) {
 			this.report_name = route[3];
+			if (route[3] == "ResultadoAnalisis") {
+				this.pepe_order_by = 'PEPE';
+			} else {
+				this.pepe_order_by = null;
+			}
 		}
 
 		this.add_totals_row = this.view_user_settings.add_totals_row || 0;
@@ -29,11 +34,11 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 					this.report_doc.json = JSON.parse(this.report_doc.json);
 
 					this.filters = this.report_doc.json.filters;
-					this.order_by = this.report_doc.json.order_by;
+					this.order_by = this.pepe_order_by || this.report_doc.json.order_by;
 					this.add_totals_row = this.report_doc.json.add_totals_row;
 					this.page_title = this.report_name;
 					this.page_length = this.report_doc.json.page_length || 20;
-					this.order_by = this.report_doc.json.order_by || 'modified desc';
+					this.order_by = this.pepe_order_by || this.report_doc.json.order_by || 'modified desc';
 				});
 		}
 	}
@@ -98,7 +103,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		let report_settings = {
 			filters: this.report_doc.json.filters,
 			fields: this.report_doc.json.fields,
-			order_by: this.report_doc.json.order_by,
+			order_by: this.pepe_order_by || this.report_doc.json.order_by,
 			add_totals_row: this.report_doc.json.add_totals_row,
 			page_length: this.report_doc.json.page_length,
 			column_widths: this.report_doc.json.column_widths
@@ -180,6 +185,13 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 	}
 
 	update_row(doc, flash_row) {
+		for(var d in this.data){
+			var key = Object.keys(this.data[d]).filter(k => this.data[d][k] === undefined)
+			if(key.length){
+				return;
+			}
+		}
+
 		const to_refresh = [];
 
 		this.data = this.data.map((d, i) => {
