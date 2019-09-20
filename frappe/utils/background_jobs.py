@@ -190,7 +190,7 @@ def get_queue_list(queue=None):
 	'''Defines possible queues. Also wraps a given queue in a list after validating.'''
 	queue_list = queue or list(get_queues_config())
 
-	if isinstance(queue_list, string_types):
+	if isinstance(queue, string_types):
 		queue_list = [queue_list]
 
 	if queue:
