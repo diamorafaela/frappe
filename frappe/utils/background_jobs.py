@@ -212,10 +212,9 @@ def get_queue(queue, is_async=True):
 
 def validate_queue(queue):
 	print(str(queue))
-	if isinstance(queue, list):
-		queue = queue[0]
 
 	default_queue_list = get_queue_list()
+	print(str(default_queue_list))
 
 	if queue not in default_queue_list:
 		frappe.throw(_("Queue should be one of {0}").format(', '.join(default_queue_list)))
