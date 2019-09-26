@@ -184,7 +184,7 @@ def get_jobs(site=None, queue=None, key='method'):
 	return jobs_per_site
 
 def get_queues_config():
-	return frappe.get_site_config().get("queues", queue_timeout)
+	return frappe.get_conf().get("queues", queue_timeout)
 
 def get_queue_list(queue=None):
 	'''Defines possible queues. Also wraps a given queue in a list after validating.'''
