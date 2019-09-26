@@ -211,6 +211,10 @@ def get_queue(queue, is_async=True):
 	return Queue(queue, **kwargs)
 
 def validate_queue(queue):
+	frappe.throw(str(queue))
+	if isinstance(queue, list):
+		queue = queue[0]
+
 	default_queue_list = get_queue_list()
 
 	if queue not in default_queue_list:
