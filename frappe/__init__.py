@@ -202,7 +202,7 @@ def connect_replica():
 	local.primary_db = local.db
 	local.db = local.replica_db
 
-def get_site_config(sites_path=None, site_path=None):
+def get_site_config(sites_path="sites", site_path=None):
 	"""Returns `site_config.json` combined with `sites/common_site_config.json`.
 	`site_config` is a set of site wide settings like database name, password, email etc."""
 	config = {}
