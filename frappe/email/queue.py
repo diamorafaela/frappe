@@ -467,8 +467,6 @@ def send_one(email, smtpserver=None, auto_commit=True, now=False, from_test=Fals
 
 		# bad connection/timeout, retry later
 
-		frappe.publish_realtime("diamo_logger", frappe.get_traceback())
-
 		if any("Sent" == s.status for s in recipients_list):
 			frappe.db.sql("""update `tabEmail Queue` set status='Partially Sent', modified=%s where name=%s""",
 				(now_datetime(), email.name), auto_commit=auto_commit)
