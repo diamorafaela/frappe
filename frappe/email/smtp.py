@@ -149,7 +149,14 @@ def get_default_outgoing_email_account(raise_exception_not_set=True):
 
 def _get_email_account(filters):
 	name = frappe.db.get_value("Email Account", filters)
-	return frappe.get_doc("Email Account", name) if name else None
+	account = frappe.get_doc("Email Account", name) if name else None
+	if not account:
+		return account
+
+	if not account.service and account.domain:
+		account.update(account.get_domain(account.email_id))
+
+	return account
 
 class SMTPServer:
 	def __init__(self, login=None, password=None, server=None, port=None, use_tls=None, append_to=None):
