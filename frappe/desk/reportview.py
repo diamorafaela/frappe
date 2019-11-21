@@ -25,7 +25,7 @@ def get():
 
 def execute(doctype, *args, **kwargs):
 	if doctype == "Muestra":
-		for f in kwargs.fields:
+		for f in kwargs.get("fields", []):
 			if "count(" in f or "sum(" in f:
 				return []
 	return DatabaseQuery(doctype).execute(*args, **kwargs)
