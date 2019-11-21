@@ -42,9 +42,8 @@ class DatabaseQuery(object):
 			raise frappe.PermissionError(self.doctype)
 
 		if self.doctype == "Muestra":
-			for f in fields:
-				if "_user_tags" in f:
-					return frappe.db.sql("SELECT 'Sin Etiquetas' as `_user_tags`, 0 as `count(*)` ", as_dict=not as_list, debug=debug, update=update)
+			if "count(*)" in fields and "_user_tags" in fields:
+				return frappe.db.sql("SELECT NULL as `_user_tags`, 0 as `count(*)` ", as_dict=not as_list, debug=debug, update=update)
 
 		# filters and fields swappable
 		# its hard to remember what comes first
