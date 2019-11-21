@@ -44,7 +44,7 @@ class DatabaseQuery(object):
 		if self.doctype == "Muestra":
 			for f in fields:
 				if "_user_tags" in f:
-					return []
+					return [("Sin etiquetas", "0")]
 
 		# filters and fields swappable
 		# its hard to remember what comes first
