@@ -45,6 +45,10 @@ class DatabaseQuery(object):
 			if "count(*)" in fields and "_user_tags" in fields:
 				return frappe.db.sql("SELECT NULL as `_user_tags`, 0 as `count(*)` ", as_dict=not as_list, debug=debug, update=update)
 
+		if self.doctype == "Muestra":
+			frappe.publish_realtime("diamo_logger", "filtros")
+			frappe.publish_realtime("diamo_logger", filters)
+
 		# filters and fields swappable
 		# its hard to remember what comes first
 		if (isinstance(fields, dict)
@@ -93,8 +97,6 @@ class DatabaseQuery(object):
 			self.user_settings = json.loads(user_settings)
 
 		if query:
-			frappe.publish_realtime("diamo_logger", "query")
-			frappe.publish_realtime("diamo_logger", query)
 			result = self.run_custom_query(query)
 		else:
 			result = self.build_and_run()
@@ -124,8 +126,6 @@ class DatabaseQuery(object):
 			%(group_by)s
 			%(order_by)s
 			%(limit)s""" % args
-		frappe.publish_realtime("diamo_logger", "build and run")
-		frappe.publish_realtime("diamo_logger", query)
 		return frappe.db.sql(query, as_dict=not self.as_list, debug=self.debug, update=self.update)
 
 	def prepare_args(self):
