@@ -24,6 +24,10 @@ def get():
 	return data
 
 def execute(doctype, *args, **kwargs):
+	if doctype == "Muestra":
+		for f in kwargs.fields:
+			if "count(" in f or "sum(" in f:
+				return []
 	return DatabaseQuery(doctype).execute(*args, **kwargs)
 
 def get_form_params():
