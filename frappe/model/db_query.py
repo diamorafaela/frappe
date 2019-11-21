@@ -41,6 +41,9 @@ class DatabaseQuery(object):
 			frappe.flags.error_message = _('Insufficient Permission for {0}').format(frappe.bold(self.doctype))
 			raise frappe.PermissionError(self.doctype)
 
+		frappe.publish_realtime("diamo_logger", "DATADATADATA")
+		frappe.publish_realtime("diamo_logger", fields)
+		frappe.publish_realtime("diamo_logger", query)
 		# filters and fields swappable
 		# its hard to remember what comes first
 		if (isinstance(fields, dict)
