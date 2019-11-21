@@ -45,10 +45,6 @@ class DatabaseQuery(object):
 			if "count(*)" in fields and "_user_tags" in fields:
 				return frappe.db.sql("SELECT NULL as `_user_tags`, 0 as `count(*)` ", as_dict=not as_list, debug=debug, update=update)
 
-		if self.doctype == "Muestra":
-			frappe.publish_realtime("diamo_logger", "filtros")
-			frappe.publish_realtime("diamo_logger", filters)
-
 		# filters and fields swappable
 		# its hard to remember what comes first
 		if (isinstance(fields, dict)
