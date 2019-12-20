@@ -317,4 +317,4 @@ def evaluate_alert(doc, alert, event):
 		frappe.throw(_("Error in Notification"))
 
 def get_context(doc):
-	return {"doc": doc, "nowdate": nowdate, "frappe.utils": frappe.utils}
+	return {"doc": doc, "nowdate": nowdate, "frappe.utils": frappe.utils, "frappe": frappe}
