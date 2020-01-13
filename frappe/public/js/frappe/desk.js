@@ -80,7 +80,7 @@ frappe.Application = Class.extend({
 			this.show_notes();
 		}
 
-		this.show_update_available();
+		// this.show_update_available();
 
 		if(frappe.ui.startup_setup_dialog && !frappe.boot.setup_complete) {
 			frappe.ui.startup_setup_dialog.pre_show();
